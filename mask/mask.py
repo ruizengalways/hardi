@@ -13,5 +13,5 @@ print('Masking')
 b0_mask, mask = median_otsu(data, 1, 1, dilate=2)
 
 print('Saving')
-nib.save(nib.Nifti1Image(b0_mask, img.affine), 'data_masked.nii.gz')
+nib.save(nib.Nifti1Image(b0_mask, img.affine), 'b0_masked.nii.gz')
 nib.save(nib.Nifti1Image(mask.astype('float'), img.affine), 'mask.nii.gz')
