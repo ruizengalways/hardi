@@ -10,4 +10,4 @@ data = img.get_data()
 avg = data.mean(axis=-1)
 
 nib.save(nib.Nifti1Image(avg, ref_img.affine, header=ref_hdr),
-         'denoised_k5_averaged_registered_b0.nii.gz')
+         './registered_k5/denoised_k5_averaged_registered_b0.nii.gz')
