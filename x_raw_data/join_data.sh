@@ -1,3 +1,3 @@
-base=x3D_DWSE_100um_TR1000_
+# using mrtrix3 instead of fsl because `fslmerge` changes the bit depth to 32
 
-mrcat ${base}b0_rep0{1..9}.nii.gz ${base}b0_rep{10..16}.nii.gz ${base}dir00{1..9}.nii.gz ${base}dir0{10..99}.nii.gz ${base}dir{100..144}.nii.gz raw_data.nii.gz
+mrcat x3D_DWSE_100um_*.nii.gz raw_data.nii.gz
