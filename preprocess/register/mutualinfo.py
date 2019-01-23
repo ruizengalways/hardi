@@ -40,7 +40,6 @@ def main():
     MIs = []
 
     for i in np.arange(16, 160):
-        print(i)
         testvol = nib.load(basefn + '{:04d}.nii.gz'.format(i)).get_data()
         MIs.append(MI(refvol, testvol, nbins))
 
