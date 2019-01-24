@@ -3,24 +3,17 @@
 # to the k7 filter width. I imagine the optimal parameters are not
 # very sensitive to the filter width. 
 
-fnbase=../denoise/denoised_k7/denoised_k7
+fnbase=../../denoise/denoised_k7/denoised_k7
 
 # choosing the 8th b0 as reference, the first 1-3ish
 # have a structure that does not appear in the others
 reference=${fnbase}_n0008.nii.gz
 
-# Making b0_param_sweep folder if it does not exist
-if [ ! -d b0_param_sweep ]
-then
-    mkdir b0_param_sweep
-fi
-
-
 for cost in corratio mutualinfo  # trying two cost functions
 do
     for dof in 3 6 9 12  # trying different degrees of freedom
     do
-	outdir=b0_param_sweep/${cost}_${dof}
+	outdir=${cost}_${dof}
 	mkdir $outdir
 	cp $reference $outdir/${cost}_${dof}_n0008.nii.gz  # copying reference image into "registered" folder
 
