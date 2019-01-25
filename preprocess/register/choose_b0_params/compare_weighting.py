@@ -44,4 +44,4 @@ ax.set_ylabel('Correlation coefficient')
 ax.legend()
 plt.tight_layout()
 
-plt.savefig('weighted_vs_nw.pdf')
+plt.savefig('b0_weighted_vs_nw_results.pdf')
