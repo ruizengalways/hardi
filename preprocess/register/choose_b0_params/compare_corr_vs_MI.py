@@ -23,7 +23,7 @@ def corr(vol1, vol2):
     return np.corrcoef(vol1.flatten(), vol2.flatten())[0, 1]
 
 
-calc = False
+calc = True
 if calc:
     dofs = np.array([3, 6, 9, 12])
     volnums = np.hstack((range(8), range(9, 16)))
@@ -58,8 +58,8 @@ values = [f[choice].mean()
           for f, choice in zip([corr_rs, mutualinfo_MIs], choices)]
 
 # PLOTTING corratio COST FUNCTION
-fig, axes = plt.subplots(1, 2, figsize=(12, 6))
-ax1, ax2 = axes
+fig, ax1 = plt.subplots(1, 1)
+# ax1, ax2 = axes
 
 for i, dof in enumerate(dofs):
     color = 'C{}'.format(i)
@@ -72,17 +72,17 @@ ax1.set_xlabel(r'$b_0$ number')
 ax1.set_ylabel('Correlation coefficient')
 ax1.legend()
 
-for i, dof in enumerate(dofs):
-    color = 'C{}'.format(i)
-    ax2.plot(volnums, mutualinfo_MIs[i], '.',
-             label='DOF: {}'.format(dof), c=color, ls='-')
-    ax2.plot([0, 15], [mutualinfo_MIs[i].mean(),
-                       mutualinfo_MIs[i].mean()], c=color, ls=':')
-ax2.set_title('Mutual information results: mutualinfo cost function\nBest: DOF = {}'.format(
-    dofs[choices[1]]))
-ax2.set_xlabel(r'$b_0$ number')
-ax2.set_ylabel('Mutual information')
-ax2.legend()
+# for i, dof in enumerate(dofs):
+#     color = 'C{}'.format(i)
+#     ax2.plot(volnums, mutualinfo_MIs[i], '.',
+#              label='DOF: {}'.format(dof), c=color, ls='-')
+#     ax2.plot([0, 15], [mutualinfo_MIs[i].mean(),
+#                        mutualinfo_MIs[i].mean()], c=color, ls=':')
+# ax2.set_title('Mutual information results: mutualinfo cost function\nBest: DOF = {}'.format(
+#     dofs[choices[1]]))
+# ax2.set_xlabel(r'$b_0$ number')
+# ax2.set_ylabel('Mutual information')
+# ax2.legend()
 
 plt.tight_layout()
-plt.savefig('b0_corr_vs_MI_results.pdf')
+plt.savefig('b0_corr_results.pdf')
