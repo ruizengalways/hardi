@@ -3,7 +3,7 @@ import nibabel as nib
 import matplotlib.pyplot as plt
 
 
-def MI(im1, im2, bins):
+def MI(im1, im2, bins=256):
     # Mutual information for joint histogram
 
     hgram, _, _ = np.histogram2d(im1.ravel(), im2.ravel(), bins=bins)
@@ -30,7 +30,6 @@ if calc:
 
     # ANALYZING corratio COST FUNCTION
     corr_rs = np.zeros((4, 15))
-    # corr_MIs = np.zeros((4, 15))
     for i, dof in enumerate(dofs):
         print('Cost: corratio, dof: {}'.format(dof))
         basefn = './corratio_{dof}/corratio_{dof}_n'.format(dof=dof)
@@ -39,7 +38,6 @@ if calc:
         for j, n in enumerate(volnums):
             vol = nib.load(basefn + '{:04d}.nii.gz'.format(n)).get_data()
             corr_rs[i, j] = corr(ref, vol)
-            # corr_MIs[i, j] = MI(ref, vol, 1024)
 
     # ANALYZING mutualinfo COST FUNCTION
     mutualinfo_MIs = np.zeros((4, 15))
@@ -51,8 +49,7 @@ if calc:
 
         for j, n in enumerate(volnums):
             vol = nib.load(basefn + '{:04d}.nii.gz'.format(n)).get_data()
-            mutualinfo_MIs[i, j] = MI(ref, vol, 1024)
-            # mutualinfo_rs[i, j] = corr(ref, vol)
+            mutualinfo_MIs[i, j] = MI(ref, vol, 256)
 
 # Getting optimal choice
 choices = [np.argmax(f.mean(axis=1))
@@ -74,30 +71,6 @@ ax1.set_title('Correlation results: corratio cost function\nBest: DOF = {}'.form
 ax1.set_xlabel(r'$b_0$ number')
 ax1.set_ylabel('Correlation coefficient')
 ax1.legend()
-
-# for i, dof in enumerate(dofs):
-#     color = 'C{}'.format(i)
-#     ax2.plot(volnums, corr_MIs[i], '.',
-#              label='DOF: {}'.format(dof), c=color, ls='-')
-#     ax2.plot([0, 15], [corr_MIs[i].mean(), corr_MIs[i].mean()], c=color, ls=':')
-# ax2.set_title('Mutual information results: corratio cost function\nBest: DOF = {}, MI={:.4f}'.format(
-#     dofs[choices[1]], values[1]))
-# ax2.set_xlabel(r'$b_0$ number')
-# ax2.set_ylabel('Mutual information')
-# ax2.legend()
-
-
-# for i, dof in enumerate(dofs):
-#     color = 'C{}'.format(i)
-#     ax3.plot(volnums, mutualinfo_rs[i], '.',
-#              label='DOF: {}'.format(dof), c=color, ls='-')
-#     ax3.plot([0, 15], [mutualinfo_rs[i].mean(),
-#                        mutualinfo_rs[i].mean()], c=color, ls=':')
-# ax3.set_title('Correlation results: mutualinfo cost function\nBest: DOF = {}, r = {:.4f}'.format(
-#     dofs[choices[2]], values[2]))
-# ax3.set_xlabel(r'$b_0$ number')
-# ax3.set_ylabel('Correlation coefficient')
-# ax3.legend()
 
 for i, dof in enumerate(dofs):
     color = 'C{}'.format(i)
