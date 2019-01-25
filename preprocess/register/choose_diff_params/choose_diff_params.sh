@@ -2,16 +2,13 @@
 # to choose the best way to register the DWIs together. I am using
 # the denoised data with the k7 filter width. 
 
-fnbase=../denoise/denoised_k7/denoised_k7
+fnbase=../../denoise/denoised_k7/denoised_k7
 reference=../registered_b0/mean_registered_b0.nii.gz 
 
 cost=mutualinfo  # not looking at corratio, we know the contrast is different
 interp=sinc
 sch=${FSLDIR}/etc/flirtsch/sch3Dtrans_3dof
 
-# parameter tuning
-weighting=w
-dof=3
 
 if [ $dof -eq 3 ]
 then
