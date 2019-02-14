@@ -9,3 +9,5 @@
 *.txt
 first_pass
 *.out
+*.egg-info
+*.pkl
