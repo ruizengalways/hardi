@@ -10,7 +10,8 @@
 
 \section{Introduction}
 These notes describe the effect of HARDI data denoising on the resulting fiber
-ODF (fODF) calculated using constrained spherical deconvolution (CSD) \cite{Tournier2007}. 
+orientation distribution function (fODF) calculated using constrained spherical
+deconvolution (CSD) \cite{Tournier2007}.
 
 fODF fitting was performed using the \texttt{csdeconv} module in the
 \texttt{DIPY} python package. The fiber response function was estimated from the
@@ -37,9 +38,9 @@ in order to isolate the effect of denoising.
 The fiber response function is defined to be symmetric about the $z$-axis, such
 that its spherical harmonic representation has $c_{\ell m} = 0$ for $m \neq 0$,
 where $c_{\ell m}$ is the coefficient for the real spherical harmonic function
-$Y_{\ell}^m$. Figure~\ref{fig:response_sh} shows a comparison of the absolute value
-of these coefficients (a proxy for ``power'' in each angular band) estimated
-from the raw and denoised datasets.
+$Y_{\ell}^m$. Figure~\ref{fig:response_sh} shows a comparison of the absolute
+value of these coefficients (a proxy for ``power'' in each harmonic degree)
+estimated from the raw and denoised datasets.
 
 \begin{figure}[h]
   \centering
@@ -51,9 +52,8 @@ from the raw and denoised datasets.
   \label{fig:response_sh}
 \end{figure}
 
-In general the estimated response functions are similar, though there is a
-noticeable difference between the raw and denoised coefficients, which grows
-more severe at higher degrees. 
+In general the estimated response functions are similar. The difference
+between raw and denoised coefficients increases for higher harmonic degrees. 
 
 \subsection{fODF scalar metrics}
 
@@ -76,8 +76,8 @@ denoised fODFS, calculated as:
 \begin{align}
   \text{Percent Difference} = \frac{\text{GFA}_{\text{denoised}} - \text{GFA}_{\text{raw}}}{\text{GFA}_{\text{raw}}} * 100.
 \end{align}
-Note that all calculations of percent difference in these notes use the same
-convention presented above.
+(Note that all calculations of percent difference in these notes use the same
+form presented above.)
 
 \begin{figure}[H]
   \centering
@@ -92,8 +92,8 @@ negative, indicating that the denoised fODFs tend to have a smaller GFA than the
 raw fODFs. This agrees with the results from the response function comparison:
 the denoised fODFs and response function are more isotropic and have less power
 at high angular frequency bands than the raw fODFs. This makes intuitive sense:
-high frequency noise in the raw data carries over into high angular frequency
-noise in the reconstructed fODF.
+any high frequency noise in the raw data carries over into high angular
+frequency noise in the reconstructed fODF.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Number of peaks
@@ -104,12 +104,12 @@ least one neighbor and greater than or equal to all neighbors (a perfectly
 isotropic fODF would thus have zero peaks). In this study, peaks were also
 filtered by their relative size (only including peaks with height greater than
 0.5 of the greatest peak height) and spacing on the sphere (only including peaks
-with an angular separation greater than 25 degrees of larger peaks). Additionally,
-a maximum of five peaks was found at each voxel.
+with an angular separation greater than 25 degrees of any larger
+peaks). Up to five peaks were saved at each voxel. 
 
-Figure~\ref{fig:numpeaks} shows the distribution of difference in number
-of peaks between the raw and denoised data. For all sliding window widths,
-the distributions are symmetric about zero. 
+Figure~\ref{fig:numpeaks} shows the distribution of the difference in the number
+of peaks between the raw and denoised data. For all sliding window widths, the
+distributions are symmetric about zero.
 
 \begin{figure}[H]
   \centering
@@ -156,13 +156,14 @@ each spherical harmonic degree, defined as:
   P_{\ell} = \sum_{m=-\ell}^{\ell} c_{\ell m}^2
 \end{align}
 
-Figure~\ref{fig:shpower0} shows these distributions as boxplots at each SH
+Figure~\ref{fig:shpower0} shows these distributions as boxplots at each harmonic
 degree. Generally, the denoised fODFs have more power in the $\ell = 2$ band,
 and less or equal power for other bands. Additionally, the variance of the
-percent difference in power tends to get larger at higher degree
-bands. Figure~\ref{fig:shpower85} shows the same information while only
-considering fODFs with GFA $>=$ 0.85. Generally, the percent differences are
-closer to zero, with lower variance. 
+percent difference in power tends to get larger at higher harmonic degrees
+Figure~\ref{fig:shpower85} shows the same information while only considering
+fODFs with GFA $>=$ 0.85. Generally, the percent differences are closer to zero,
+with lower variance, suggesting that sharper, more unidirectional fODFs are less
+sensitive to denoising.
 
 \begin{figure}[H]
   \centering
@@ -189,12 +190,11 @@ sliding window size in the denoising algorithm. Again, without ground truth
 fODFs for comparison, we cannot conclude much else about the value of denoising
 or the optimal sliding window size.
 
-The next step on this project is to acquire the microCT data and begin working
-through any registration challenges, depending on the state of the sample
-staining issue. We now have a full CSD reconstruction of the dataset --- if
-needed I can look into tractography across the whole brain to identify
-potentially important tracts we should avoid if we end up needing to section the
-sample prior to x-ray imaging.
+The next step for this project is to acquire the microCT data and begin working
+through registration challenges that will arise if we end up needing to section
+the sample. If we do section the sample: we now have a full CSD reconstruction
+of the dataset --- I can look into doing tractography across the whole brain to
+identify potentially important tracts we should avoid.
 
 \bibliographystyle{ieeetr}
 \bibliography{csd_notes}
